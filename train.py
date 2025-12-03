@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils import data
 from torchvision import transforms
-from torch.utils.tensorboard import SummaryWriter
+# from torch.utils.tensorboard import SummaryWriter
 
 from PIL import Image
 import warnings
@@ -274,9 +274,9 @@ def main(argv):
         cfm_wrapper_kwargs=cfm_wrapper_kwargs,
         use_norm=args.use_norm
     )
-    if torch.cuda.device_count() > 1:
-        net = nn.DataParallel(net)
-    net.to(device)
+    # if torch.cuda.device_count() > 1:
+    #     net = nn.DataParallel(net)
+    net.cuda()
 
     train_dataloader = data.DataLoader(train_dataset, batch_size=args.batch_size, num_workers=args.num_workers,
                                        shuffle=True, pin_memory=(device == "cuda"))
