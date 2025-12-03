@@ -158,7 +158,8 @@ def eval_epoch(model, criterion, eval_dataloader, epoch, tb_writer=None):
     for x in eval_dataloader:
         x = x.to(device).contiguous()
         batch_size = x.shape[0]
-        out = model(x)
+        with torch.no_grad():
+            out = model(x)
         out_criterion = criterion(out, x)
 
         total_rd_loss += out_criterion["rd_loss"].mean().item() * batch_size
